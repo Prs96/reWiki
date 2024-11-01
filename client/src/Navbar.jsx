@@ -20,7 +20,7 @@ export default function Navbar() {
             <motion.a
               key={item.label}
               href="#"
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="text-black-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: -20 }}
