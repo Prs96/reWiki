@@ -1,6 +1,13 @@
-module.exports = {
+import tailwindcss from "tailwindcss";
+export default {
   plugins: {
-    tailwindcss: {},
+    tailwindcss: {
+      content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+      theme: {
+        extend: {},
+      },
+      plugins: [tailwindcss],
+    },
     autoprefixer: {},
   },
-}
+};

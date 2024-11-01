@@ -3,8 +3,6 @@ services:
     build: ./client
     container_name: client
     restart: always
-    environment:
-      - PORT=3000
     command: >
       sh -c "pnpm run dev"
     volumes:
@@ -15,6 +13,7 @@ services:
       - server
     networks:
       - network
+
   server:
     build: ./server
     container_name: server
