@@ -13,7 +13,7 @@ def key_verify(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         key = encrypt(request.headers.get("X-USER-KEY"), 13)
-        user_key = request.json["data"]["key"]
+        user_key = request.json.get("key")
         if not key or not user_key or key != user_key:
             request.key_verify = False
         else:
