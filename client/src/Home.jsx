@@ -27,6 +27,8 @@ export default function Component() {
   const [isSearching, setIsSearching] = useState(false);
   const apiKey=useAuth();
   
+  console.log(apiKey.api);
+  
   const navigate = useNavigate();
  
   const handleSearch = async (e) => {
@@ -38,7 +40,7 @@ export default function Component() {
     await axios.post('http://localhost:5000/', { // http://localhost:2000/auth/regenkey
       headers: {
         'Content-Type': 'application/json',
-        'X-USER-KEY': `${apiKey}`
+        'X-USER-KEY': `${apiKey.api}`
       }, data
     })
     .then(response => {
