@@ -9,4 +9,5 @@ key_valid = is_key_valid
 key_valid = key_verify(key_valid)
 
 router.add_url_rule("/key", view_func=get_key, methods=["GET"])
+router.add_url_rule("/regenkey", view_func=get_key, methods=["GET"])
 router.add_url_rule("/key/valid/", view_func=key_valid, methods=["POST"])
