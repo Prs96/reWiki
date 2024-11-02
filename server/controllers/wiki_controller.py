@@ -43,6 +43,7 @@ def get_wikibot():
     user_input = request.json["data"]["query"]
     user_context = request.json["data"]["context"]
     if not request.key_verify:
+        print("not verified")
         user_context = user_context.split(".")
         user_context = ".".join(
             [
