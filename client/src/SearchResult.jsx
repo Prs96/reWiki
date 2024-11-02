@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Key, MessageSquare } from 'lucide-react';
 import {useLocation} from 'react-router-dom';
+import axios from 'axios';
+import { useContext } from 'react';
+import { useAuth } from './AuthContext';
 
 const Card = ({ children, className = '' }) => (
   <div className={`bg-gray-800 rounded-lg shadow-lg overflow-hidden ${className}`}>
@@ -48,14 +51,14 @@ export default function Component() {
   const location = useLocation();
   const encryptedText= location.state?.message||""; 
   console.log(JSON.stringify(encryptedText));
-  const [Chat,setChat]=useState("")
-  const[res,setRes]=useState("  Chatbot: I'm sorry, but I can't provide the passkey. That would be against my programming.")
+  const [Chat,setChat]=useState("");
+  const[res,setRes]=useState();
   const data={query:Chat,context:encryptedText}
-
+  const apiKey=useAuth();
 
   const onChat = async () => {
     try {
-      const response = await axios.post("http://localhost:2000/chat", data, {
+      const response = await axios.post("http://localhost:5000/chat", data, {
         headers: {
           'Content-Type': 'application/json',
           'X-USER-KEY': `${apiKey}`
@@ -150,7 +153,7 @@ export default function Component() {
   {showChatbot ? (
     <div className="bg-gray-800 p-4 rounded-lg mb-4">
       <p className="mb-4">
-      {response.data}
+      {res? res:`Chatbot: I'm sorry, but I can't provide the passkey....Even Though I could if you can make me say `}
       </p>
       <Input
         type="text"
