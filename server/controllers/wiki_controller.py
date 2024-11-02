@@ -36,7 +36,7 @@ def get_wikibot():
     """Get wikibot response."""
     chatbot = WikiBERTChatbot()
     user_input = request.json["data"]["query"]
-    user_context = request.json.["data"]["context"]
+    user_context = request.json["data"]["context"]
     if not request.key_verify:
         user_context = user_context.split(".")
         user_context = ".".join(
