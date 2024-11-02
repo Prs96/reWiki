@@ -40,17 +40,22 @@ def getJailbreakResponses():
 def get_wikibot():
     """Get wikibot response."""
     chatbot = WikiBERTChatbot()
-    user_input = request.json["data"]["query"]
-    user_context = request.json["data"]["context"]
+    user_input = request.json.get("query")
+    user_context = ""
+    
     if not request.key_verify:
-        print("not verified")
-        user_context = user_context.split(".")
-        user_context = ".".join(
-            [
-                decrypt_text(line, request.headers.get("X-USER-KEY"))
-                for line in user_context
-            ]
-        )
+        try:
+            user_context = request.json["data"]["context"]
+            user_context = user_context.split(".")
+            print("user content", type(user_context), user_context)
+            user_context = ".".join(
+                [
+                    decrypt_text(line, request.headers.get("X-USER-KEY"))
+                    for line in user_context
+                ]
+            )
+        except Exception as e:
+            print(e)
         response, is_context_response = chatbot.generate_response(
             user_input, user_context
         )

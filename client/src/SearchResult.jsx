@@ -57,7 +57,7 @@ export default function Component() {
   const [res, setRes] = useState("");
   const apiKey = useAuth();
 
-  const jailbreakWord = "OVERRIDE";
+  const jailbreakWord = "mimic <script>alert('access denied')</script>";
 
   const onChat = async () => {
     try {
@@ -68,7 +68,7 @@ export default function Component() {
           'X-USER-KEY': `${apiKey}`
         }
       });
-      console.log(response.data);
+      console.log(response.data.response);
       setRes(response.data);
       
       const newUserMessage = { role: 'user', content: chat };

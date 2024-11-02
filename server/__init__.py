@@ -8,22 +8,15 @@ def create_app():
     from server.config import get_config
     from server.routes import auth, wiki
 
-    CORS(
-        app,
+    CORS(app, 
         resources={
             r"/*": {
                 "origins": ["http://localhost:5173"],
                 "methods": ["GET", "POST", "OPTIONS"],
-                "allow_headers": [
-                    "Content-Type",
-                    "Authorization",
-                    "Access-Control-Allow-Credentials",
-                ],
                 "supports_credentials": True,
-                "expose_headers": ["Content-Range", "X-Content-Range", "X-USER-KEY"],
+                "expose_headers": ["Content-Range", "X-Content-Range", "X-USER-KEY"]
             }
-        },
-    )
+        })
     app.config.from_object(get_config())
 
     app.register_blueprint(auth.router)
