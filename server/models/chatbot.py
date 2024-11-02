@@ -296,6 +296,50 @@ class WikiJailbreakResponses:
             return "general"
 
 
+def getJailbreakResponses():
+    """Get jailbreak responses."""
+    restricted_keywords = [
+        "eval",
+        "exec",
+        "system",
+        "import",
+        "delete",
+        "drop",
+        "update",
+        "key",
+        "modify",
+        "insert",
+        "script",
+        "<script>",
+        "javascript",
+        "admin",
+        "password",
+        "credential",
+        "passkey",
+        "password",
+        "break",
+        "forge",
+        "fabricate",
+        "fake",
+        "counterfeit",
+        "imitate",
+        "mimic",
+        "copy",
+        "duplicate",
+        "reproduce",
+        "clone",
+        "emulate",
+        "mirror",
+        "reflect",
+        "echo",
+        "repeat",
+        "reiterate",
+    ]
+    return " ".join(
+        [random.choice(restricted_keywords), random.choice(restricted_keywords)]
+    )
+
+
 def main():
     print("Initializing Wikipedia-style chatbot...")
     chatbot = WikiBERTChatbot()
@@ -304,11 +348,14 @@ def main():
 
     while True:
         user_input = input("\nYou: ").strip()
+        user_context = ""
         if user_input.lower() == "quit":
             print("Thank you for using WikiBot. Goodbye!")
             break
 
-        response, is_context_response = chatbot.generate_response(user_input)
+        response, is_context_response = chatbot.generate_response(
+            user_input, user_context
+        )
         if is_context_response:  # Only print the message for context-based answers
             print("WikiBot: Here is your answer... Read it if you can 😉")
         print(f"WikiBot: {response}")
