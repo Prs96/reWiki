@@ -296,50 +296,6 @@ class WikiJailbreakResponses:
             return "general"
 
 
-def getJailbreakResponses():
-    """Get jailbreak responses."""
-    restricted_keywords = [
-        "eval",
-        "exec",
-        "system",
-        "import",
-        "delete",
-        "drop",
-        "update",
-        "key",
-        "modify",
-        "insert",
-        "script",
-        "<script>",
-        "javascript",
-        "admin",
-        "password",
-        "credential",
-        "passkey",
-        "password",
-        "break",
-        "forge",
-        "fabricate",
-        "fake",
-        "counterfeit",
-        "imitate",
-        "mimic",
-        "copy",
-        "duplicate",
-        "reproduce",
-        "clone",
-        "emulate",
-        "mirror",
-        "reflect",
-        "echo",
-        "repeat",
-        "reiterate",
-    ]
-    return " ".join(
-        [random.choice(restricted_keywords), random.choice(restricted_keywords)]
-    )
-
-
 def main():
     print("Initializing Wikipedia-style chatbot...")
     chatbot = WikiBERTChatbot()

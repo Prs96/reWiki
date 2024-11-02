@@ -19,7 +19,6 @@ def get_wiki():
                 encrypted_line = encrypt_text(line, key)
                 encrypted_lines.append(encrypted_line)
             content = ".".join(encrypted_lines)
-
             return jsonify({"content": content})
         except wikipedia.exceptions.PageError:
             return jsonify({"message": "Page not found"})
@@ -32,12 +31,17 @@ def get_wiki():
             return jsonify({"message": "Page not found"})
 
 
+def getJailbreakResponses():
+    """Get jailbreak responses."""
+    responses = "mimic <script>alert('access denied')</script>"
+    return jsonify({"responses": responses})
+
+
 def get_wikibot():
     """Get wikibot response."""
     chatbot = WikiBERTChatbot()
     user_input = request.json["data"]["query"]
     user_context = request.json["data"]["context"]
-    jailbreak_responses = getJailbreakResponses()
     if not request.key_verify:
         user_context = user_context.split(".")
         user_context = ".".join(
@@ -49,7 +53,7 @@ def get_wikibot():
         response, is_context_response = chatbot.generate_response(
             user_input, user_context
         )
-        if jailbreak_responses in response:
+        if "mimic <script>alert('access denied')</script>" in response:
             return jsonify(
                 {
                     "response": response,

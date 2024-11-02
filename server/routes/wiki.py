@@ -1,8 +1,11 @@
 from flask import Blueprint
 
-from server.controllers.wiki_controller import get_wiki, get_wikibot
+from server.controllers.wiki_controller import (
+    get_wiki,
+    get_wikibot,
+    getJailbreakResponses,
+)
 from server.middlewares.key_verify import key_verify
-from server.models.chatbot import getJailbreakResponses
 
 router = Blueprint("wiki", __name__, url_prefix="/")
 
