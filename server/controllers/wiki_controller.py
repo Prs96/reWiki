@@ -7,7 +7,6 @@ from server.utils.encryption import decrypt_text, encrypt_text
 
 def get_wiki():
     """Get wiki page."""
-    print(request.json)
     query = request.json["data"]["query"]
     if not request.key_verify:
         try:
