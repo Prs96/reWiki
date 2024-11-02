@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Search, TrendingUp, Clock } from 'lucide-react'
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Search, TrendingUp, Clock } from 'lucide-react';
+// import axios from 'axios'; // Commented out since you don't have the API key
+import { useNavigate } from 'react-router-dom';
 
 const Searched = ({ heading, description }) => (
   <motion.div
-    className="flex flex-col border border-purple-500 space-y-4 mt-6 z-50 max-w-md mx-auto p-4 bg-gray-900 rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:scale-105"
+    className="flex flex-col justify-between border border-purple-500 space-y-4 mt-6 z-50 w-64 mx-auto p-4 bg-gray-900 rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:scale-105"
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 20 }}
@@ -12,22 +14,62 @@ const Searched = ({ heading, description }) => (
   >
     <h2 className="text-2xl font-semibold text-left text-purple-300">{heading}</h2>
     <p className="text-left text-gray-400 mb-5">{description}</p>
-    <button className="w-full bg-purple-700 text-white hover:bg-purple-600 py-2 px-4 rounded transition-colors duration-300">
+    <button className="w-full bg-purple-700 mt-auto text-white hover:bg-purple-600 py-2 px-4 rounded transition-colors duration-300">
       More Info
     </button>
   </motion.div>
-)
+);
 
-export default function EnhancedReWiki() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [isSearching, setIsSearching] = useState(false)
+export default function Component() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    setIsSearching(true)
-    // Simulating search delay
-    setTimeout(() => setIsSearching(false), 1500)
-  }
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    setIsSearching(true); // Set the loading state
+
+    // Simulated API response
+    const simulatedResponse = {
+      data: [
+        { id: 1, title: "Quantum Computing", description: "Explore the fascinating world of quantum mechanics." },
+        { id: 2, title: "Artificial Intelligence", description: "Discover the latest advancements in AI, machine learning, and neural networks." },
+        { id: 3, title: "Renewable Energy", description: "Learn about sustainable energy sources and their impact on global climate change." },
+      ],
+    };
+
+    // Uncomment when you have the API key
+    /*
+    await axios.post('https://api.example.com/', {
+      headers: {
+        'X-USER-KEY': `${apiKey}`
+      },
+      params: { query: searchTerm }
+    })
+    .then(response => {
+      console.log(response.data);
+      navigate({
+        pathname: '/search',
+        state: { results: response.data } 
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    })
+    .finally(() => {
+      setIsSearching(false);
+    });
+    */
+
+    // For testing, use the simulated response
+    console.log(simulatedResponse.data);
+    navigate({
+      pathname: '/search',
+      state: { results: simulatedResponse.data } // Use the simulated response
+    });
+
+    setIsSearching(false); // Reset loading state
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white font-sans">
@@ -40,7 +82,7 @@ export default function EnhancedReWiki() {
             transition={{ duration: 0.5 }}
           >
             <motion.h1 
-              className="text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600"
+              className="text-4xl md:text-5xl w-auto font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.5, type: "spring" }}
@@ -81,33 +123,33 @@ export default function EnhancedReWiki() {
                 </button>
               </div>
             </motion.form>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <h2 className='font-semibold text-3xl mb-6 flex items-center'>
-                <TrendingUp className="mr-2 text-pink-500" />
-                Most Searched
-              </h2>
-              <AnimatePresence>
-                <Searched 
-                  heading="Quantum Computing" 
-                  description="Explore the fascinating world of quantum mechanics and its application in computing technology."
-                />
-                <Searched 
-                  heading="Artificial Intelligence" 
-                  description="Discover the latest advancements in AI, machine learning, and neural networks."
-                />
-                <Searched 
-                  heading="Renewable Energy" 
-                  description="Learn about sustainable energy sources and their impact on global climate change."
-                />
-              </AnimatePresence>
-            </motion.div>
           </motion.div>
         </main>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <h2 className='font-semibold text-3xl mb-6 flex items-center'>
+            <TrendingUp className="mr-2 text-pink-500" />
+            Most Searched
+          </h2>
+          <div className='flex flex-col md:flex-nowrap md:flex-row gap-4 justify-between'>
+            <Searched 
+              heading="Quantum Computing" 
+              description="Explore the fascinating world of quantum mechanics."
+            />
+            <Searched
+              heading="Artificial Intelligence" 
+              description="Discover the latest advancements in AI, machine learning, and neural networks."
+            />
+            <Searched 
+              heading="Renewable Energy" 
+              description="Learn about sustainable energy sources and their impact on global climate change."
+            />
+          </div>
+        </motion.div>
       </div>
     </div>
-  )
+  );
 }

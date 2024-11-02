@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Home, User, Mail, Settings, Book } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 export default function EnhancedNavbar() {
   const [isOpen, setIsOpen] = useState(false)
-
+  const navigate=useNavigate();
   const navItems = [
-    { icon: Home, label: 'Home' },
-    { icon: Book, label: 'Wiki' },
-    { icon: User, label: 'Profile' },
-    { icon: Mail, label: 'Contact' },
-    { icon: Settings, label: 'Settings' },
-  ]
+    { icon: Home, label: 'Home', path: '/' },            // Navigates to Home
+    { icon: Book, label: 'Wiki', path: '/' },        // Navigates to Wiki
+    { icon: User, label: 'Profile', path: '/' },  // Navigates to Profile
+    { icon: Mail, label: 'Contact', path: '/' },  // Navigates to Contact
+    { icon: Settings, label: 'Settings', path: '/' }, 
+  ];
 
   return (
     <nav className="bg-gray-900 text-white p-4">
@@ -28,7 +29,7 @@ export default function EnhancedNavbar() {
           {navItems.map((item, index) => (
             <motion.a
               key={item.label}
-              href="#"
+              onClick={() =>{navigate(item.path);setIsOpen(false);}}
               className="flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-purple-700 transition-colors duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
