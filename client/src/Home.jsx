@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect,createContext,useContext } from 'react';
 import { motion } from 'framer-motion';
 import { Search, TrendingUp, Clock } from 'lucide-react';
-// import axios from 'axios'; // Commented out since you don't have the API key
+import axios from 'axios'; // Commented out since you don't have the API key
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
+import { v4 as uuid } from 'uuid';
 
 const Searched = ({ heading, description }) => (
   <motion.div
@@ -23,35 +25,28 @@ const Searched = ({ heading, description }) => (
 export default function Component() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const apiKey=useAuth();
+  
   const navigate = useNavigate();
-
+ 
   const handleSearch = async (e) => {
     e.preventDefault();
     setIsSearching(true); // Set the loading state
-
+    const userId="";
     // Simulated API response
-    const simulatedResponse = {
-      data: [
-        { id: 1, title: "Quantum Computing", description: "Explore the fascinating world of quantum mechanics." },
-        { id: 2, title: "Artificial Intelligence", description: "Discover the latest advancements in AI, machine learning, and neural networks." },
-        { id: 3, title: "Renewable Energy", description: "Learn about sustainable energy sources and their impact on global climate change." },
-      ],
-    };
-
-    // Uncomment when you have the API key
-    /*
-    await axios.post('https://api.example.com/', {
+    const data = { query: searchTerm ,key:userId}
+    await axios.post('http://localhost:5000/', { // http://localhost:2000/auth/regenkey
       headers: {
+        'Content-Type': 'application/json',
         'X-USER-KEY': `${apiKey}`
-      },
-      params: { query: searchTerm }
+      }, data
     })
     .then(response => {
       console.log(response.data);
-      navigate({
-        pathname: '/search',
-        state: { results: response.data } 
-      });
+      navigate(
+       '/search',
+        {state: { message: response.data} }
+      );
     })
     .catch(error => {
       console.error('Error fetching data:', error);
@@ -59,16 +54,6 @@ export default function Component() {
     .finally(() => {
       setIsSearching(false);
     });
-    */
-
-    // For testing, use the simulated response
-    console.log(simulatedResponse.data);
-    navigate({
-      pathname: '/search',
-      state: { results: simulatedResponse.data } // Use the simulated response
-    });
-
-    setIsSearching(false); // Reset loading state
   };
 
   return (
@@ -142,6 +127,10 @@ export default function Component() {
             <Searched
               heading="Artificial Intelligence" 
               description="Discover the latest advancements in AI, machine learning, and neural networks."
+            />
+            <Searched 
+              heading="Renewable Energy" 
+              description="Learn about sustainable energy sources and their impact on global climate change."
             />
             <Searched 
               heading="Renewable Energy" 

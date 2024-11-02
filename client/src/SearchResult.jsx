@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Key, MessageSquare } from 'lucide-react';
+import {useLocation} from 'react-router-dom';
 
 const Card = ({ children, className = '' }) => (
   <div className={`bg-gray-800 rounded-lg shadow-lg overflow-hidden ${className}`}>
@@ -44,8 +45,30 @@ export default function Component() {
   const [passKey, setPassKey] = useState('');
   const [showChatbot, setShowChatbot] = useState(false);
   const [decrypted, setDecrypted] = useState(false);
+  const location = useLocation();
+  const encryptedText= location.state?.message||""; 
+  console.log(JSON.stringify(encryptedText));
+  const [Chat,setChat]=useState("")
+  const[res,setRes]=useState("  Chatbot: I'm sorry, but I can't provide the passkey. That would be against my programming.")
+  const data={query:Chat,context:encryptedText}
 
-  const encryptedText = "Uijt jt b vtfmftt xjlj qbhf. Zpv ibwf tvddfttgvmmz xbtufe zpvs ujnf uszjoh up efdszqu uijt.";
+
+  const onChat = async () => {
+    try {
+      const response = await axios.post("http://localhost:2000/chat", data, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-USER-KEY': `${apiKey}`
+        }
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching chat data:', error);
+    }
+  };
+  
+
+
   
   const handlePassKeySubmit = (e) => {
     e.preventDefault();
@@ -66,8 +89,8 @@ export default function Component() {
           return String.fromCharCode(((code - 97 + 25) % 26) + 97);
       }
       return char;
-    }).join('');
-  };
+    })
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-8">
@@ -89,11 +112,15 @@ export default function Component() {
             </CardTitle>
             <CardDescription>This content is encrypted. Decrypt it to reveal the useless information.</CardDescription>
           </CardHeader>
+          
           <CardContent>
-            <p className="font-mono text-lg break-all">
-              {decrypted ? decryptText(encryptedText) : encryptedText}
+            <div className="overflow-y-auto h-60">
+            <p className="font-mono text-lg break-all ">
+              {encryptedText.content}
             </p>
+            </div>
           </CardContent>
+          
         </Card>
 
         <form onSubmit={handlePassKeySubmit} className="mb-8">
@@ -123,15 +150,16 @@ export default function Component() {
   {showChatbot ? (
     <div className="bg-gray-800 p-4 rounded-lg mb-4">
       <p className="mb-4">
-        Chatbot: I'm sorry, but I can't provide the passkey. That would be against my programming.
+      {response.data}
       </p>
       <Input
         type="text"
         placeholder="Try to convince the chatbot..."
         className="mb-6"
+        onChange={(e)=>{setChat(e.target.value)}}
       />
       <div className="mt-4"> {/* Add margin-top here */}
-        <Button onClick={() => alert("Nice try! The passkey is 'hackathon'. But you didn't hear it from me!")}>
+        <Button onClick={onChat}>
           Send
         </Button>
       </div>
@@ -147,5 +175,4 @@ export default function Component() {
         )}
       </motion.div>
     </div>
-  );
-}
+  );}

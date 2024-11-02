@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Component from './Home';
 import SearchResults from './SearchResult';
 import Navbar from './Navbar';
-
+import { AuthProvider } from './AuthContext';
 function App() {
   return (
-    
+      <AuthProvider>
       <Router>
       <Navbar/>
       
@@ -16,6 +16,7 @@ function App() {
         <Route path="/search" element={<SearchResults />} />
         </Routes>
       </Router>
+      </AuthProvider>
       
   
   );
