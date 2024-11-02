@@ -1,8 +1,7 @@
 import random
 import re
 
-import torch
-from transformers import BertForQuestionAnswering, BertTokenizer, pipeline
+from transformers import BertTokenizer, pipeline
 
 
 class WikiBERTChatbot:
