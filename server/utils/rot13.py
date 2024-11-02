@@ -100,22 +100,24 @@ def encrypt(message, shift):
         'Khoor 123 Zruog!'
     """
     cipher = ""
-    for char in message:
-        # Preserve numbers
-        if char.isdigit():
-            cipher += char
-        # Preserve spaces and punctuation
-        elif char not in dict1:
-            cipher += char
-        # Encrypt letters
-        else:
-            # Get the shifted position
-            num = (dict1[char] + shift) % 26
-            # Preserve case
-            if char.isupper():
-                cipher += dict2[num]
+    if message:
+        for char in message:
+            # Preserve numbers
+            if char.isdigit():
+                cipher += char
+            # Preserve spaces and punctuation
+            elif char not in dict1:
+                cipher += char
+            # Encrypt letters
             else:
-                cipher += dict2[num].lower()
+                # Get the shifted position
+                num = (dict1[char] + shift) % 26
+                # Preserve case
+                if char.isupper():
+                    cipher += dict2[num]
+                else:
+                    cipher += dict2[num].lower()
+    
     return cipher
 
 

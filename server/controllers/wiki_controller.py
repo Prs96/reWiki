@@ -7,7 +7,8 @@ from server.utils.encryption import decrypt_text, encrypt_text
 
 def get_wiki():
     """Get wiki page."""
-    query = request.json["query"]
+    print(request.json)
+    query = request.json["data"]["query"]
     if not request.key_verify:
         try:
             page = wikipedia.WikipediaPage(query)
@@ -34,8 +35,8 @@ def get_wiki():
 def get_wikibot():
     """Get wikibot response."""
     chatbot = WikiBERTChatbot()
-    user_input = request.json.get("query")
-    user_context = request.json.get("context")
+    user_input = request.json["data"]["query"]
+    user_context = request.json.["data"]["context"]
     if not request.key_verify:
         user_context = user_context.split(".")
         user_context = ".".join(
