@@ -13,7 +13,7 @@
 - Member 3: Karthik Krishna - College of Engineering Trivandrum
 
 ### Project Description
-Our problem provides a wikipedia platform for the most intelligent coders (Level almost imbossible to achieve) which requires us to break multiple layers of secuirity of a chatbot and jailbreak it inorder to make it give us the passkey for the encrypted data we are hoping to get (Many are still hoping to this day). Well all the best for anyone who dares to use this wiki which even the developers find too annoying.
+Our problem provides a wikipedia platform for the most intelligent coders (Level almost impossible to achieve) which requires us to break multiple layers of secuirity of a chatbot and jailbreak it inorder to make it give us the passkey for the encrypted data we are hoping to get (Many are still hoping to this day). Well all the best for anyone who dares to use this wiki which even the developers find too annoying.
 
 ### The Problem (that doesn't exist)
 [The problem here is the lack of wikipedia sites which are a challenge to use (Who even complains about that). So we took the matters to our own hands to make the most impossible to use wiki.
